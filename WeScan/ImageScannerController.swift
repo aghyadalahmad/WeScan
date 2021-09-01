@@ -79,6 +79,7 @@ public final class ImageScannerController: UINavigationController {
             detect(image: image) { [weak self] detectedQuad in
                 guard let self = self else { return }
                 let editViewController = EditScanViewController(image: image, quad: detectedQuad, rotateImage: false)
+                
                 self.setViewControllers([editViewController], animated: false)
             }
         }
@@ -105,7 +106,9 @@ public final class ImageScannerController: UINavigationController {
             // Use the VisionRectangleDetector on iOS 11 to attempt to find a rectangle from the initial image.
             VisionRectangleDetector.rectangle(forImage: ciImage, orientation: orientation) { (quad) in
                 let detectedQuad = quad?.toCartesian(withHeight: orientedImage.extent.height)
+                
                 completion(detectedQuad)
+                
             }
         } else {
             // Use the CIRectangleDetector on iOS 10 to attempt to find a rectangle from the initial image.
