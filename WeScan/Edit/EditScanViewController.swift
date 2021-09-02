@@ -150,7 +150,7 @@ final class EditScanViewController: UIViewController {
         
         let scaledQuad = quad.scale(quadView.bounds.size, image.size)
         
-        let originalQuad = quad.scale(quadView.bounds.size, image.size)
+        let originalQuad = quad
         
         self.quad = scaledQuad
         
