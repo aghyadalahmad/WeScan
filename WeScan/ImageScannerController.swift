@@ -123,6 +123,7 @@ public final class ImageScannerController: UINavigationController {
         detect(image: image) { [weak self] detectedQuad in
             guard let self = self else { return }
             let editViewController = EditScanViewController(image: image, quad: detectedQuad, rotateImage: false)
+            
             self.setViewControllers([editViewController], animated: true)
         }
     }
@@ -197,6 +198,8 @@ public struct ImageScannerResults {
     /// The detected rectangle which was used to generate the `scannedImage`.
     public var detectedRectangle: Quadrilateral
     
+    public var originalRectangle: Quadrilateral
+    
     @available(*, unavailable, renamed: "originalScan")
     public var originalImage: UIImage?
     
@@ -209,9 +212,9 @@ public struct ImageScannerResults {
     @available(*, unavailable, renamed: "doesUserPreferEnhancedScan")
     public var doesUserPreferEnhancedImage: Bool = false
     
-    init(detectedRectangle: Quadrilateral, originalScan: ImageScannerScan, croppedScan: ImageScannerScan, enhancedScan: ImageScannerScan?, doesUserPreferEnhancedScan: Bool = false) {
+    init(detectedRectangle: Quadrilateral,originalRectangle: Quadrilateral, originalScan: ImageScannerScan, croppedScan: ImageScannerScan, enhancedScan: ImageScannerScan?, doesUserPreferEnhancedScan: Bool = false) {
         self.detectedRectangle = detectedRectangle
-        
+        self.originalRectangle = originalRectangle
         self.originalScan = originalScan
         self.croppedScan = croppedScan
         self.enhancedScan = enhancedScan

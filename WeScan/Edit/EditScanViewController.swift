@@ -147,7 +147,11 @@ final class EditScanViewController: UIViewController {
         }
         let cgOrientation = CGImagePropertyOrientation(image.imageOrientation)
         let orientedImage = ciImage.oriented(forExifOrientation: Int32(cgOrientation.rawValue))
+        
         let scaledQuad = quad.scale(quadView.bounds.size, image.size)
+        
+        let originalQuad = quad.scale(quadView.bounds.size, image.size)
+        
         self.quad = scaledQuad
         
         // Cropped Image
@@ -166,8 +170,8 @@ final class EditScanViewController: UIViewController {
         let enhancedImage = filteredImage.applyingAdaptiveThreshold()?.withFixedOrientation()
         let enhancedScan = enhancedImage.flatMap { ImageScannerScan(image: $0) }
         
-        let results = ImageScannerResults(detectedRectangle: scaledQuad, originalScan: ImageScannerScan(image: image), croppedScan: ImageScannerScan(image: croppedImage), enhancedScan: enhancedScan)
-        
+        let results = ImageScannerResults(detectedRectangle: scaledQuad, originalRectangle: originalQuad, originalScan: ImageScannerScan(image: image), croppedScan: ImageScannerScan(image: croppedImage), enhancedScan: enhancedScan)
+    
         let reviewViewController = ReviewViewController(results: results)
         navigationController?.pushViewController(reviewViewController, animated: true)
     }
